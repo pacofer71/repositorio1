@@ -56,9 +56,20 @@ public class VentanaJuego extends JFrame{
         gl.linkSize(SwingConstants.VERTICAL, pj, pr);
         //----------------------------------------------------------------------
         miControl = new Control(this);
-        
+        iniciaBotones();
         //----------------------------------------------------------------------
         pack();
+    }
+    //--------------------------------------------------------------------------
+    public void iniciaBotones(){
+        for(int i=0; i<DIM; i++){
+            for(int j=0; j<DIM; j++){
+                pj.getBotones()[i][j].addActionListener(miControl);
+            }
+        }
+        pr.getBtnPausa().addActionListener(miControl);
+        pr.getBtnSalir().addActionListener(miControl);
+        pr.getBtnStart().addActionListener(miControl);
     }
     //--------------------------------------------------------------------------
 }
