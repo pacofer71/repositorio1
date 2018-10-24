@@ -15,16 +15,20 @@ import javax.swing.SwingConstants;
  * @author pacofer71
  */
 public class VentanaJuego extends JFrame{
+   
     PanelMinas pj;
     PanelRight pr;
     TMinas campo;
     Semaforo testigo;
+    
+   
     public VentanaJuego(){
         iniciaComponentes();
     }
+    
     public void iniciaComponentes(){
         campo=new TMinas();
-        
+        testigo = new Semaforo(true);
         pj=new PanelMinas();
         pr=new PanelRight();
         

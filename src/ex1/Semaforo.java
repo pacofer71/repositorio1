@@ -11,8 +11,8 @@ package ex1;
  */
 public class Semaforo {
     private boolean pausado;
-    public Semaforo(){
-        
+    public Semaforo(boolean b){
+        pausado=b;
     }
 
     public boolean isPausado() {
