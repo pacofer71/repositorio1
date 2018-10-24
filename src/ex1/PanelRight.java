@@ -64,6 +64,7 @@ public class PanelRight extends JPanel {
         btnStart=new JButton("START");
         btnSalir=new JButton("EXIT");
         btnPausa=new JButton("PAUSE");
+        btnPausa.setEnabled(false);
         //-------------
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
         
