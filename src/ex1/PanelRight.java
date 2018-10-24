@@ -109,6 +109,27 @@ public class PanelRight extends JPanel {
             
         
 }
+
+    public JTextField getTband() {
+        return tband;
+    }
+
+    public JTextField getTreloj() {
+        return treloj;
+    }
+
+    public JButton getBtnStart() {
+        return btnStart;
+    }
+
+    public JButton getBtnSalir() {
+        return btnSalir;
+    }
+
+    public JButton getBtnPausa() {
+        return btnPausa;
+    }
+    
 }    
 
 
