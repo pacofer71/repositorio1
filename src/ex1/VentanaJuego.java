@@ -17,10 +17,14 @@ import javax.swing.SwingConstants;
 public class VentanaJuego extends JFrame{
     PanelMinas pj;
     PanelRight pr;
+    TMinas campo;
+    Semaforo testigo;
     public VentanaJuego(){
         iniciaComponentes();
     }
     public void iniciaComponentes(){
+        campo=new TMinas();
+        
         pj=new PanelMinas();
         pr=new PanelRight();
         
