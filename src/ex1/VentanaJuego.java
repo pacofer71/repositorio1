@@ -15,12 +15,12 @@ import javax.swing.SwingConstants;
  * @author pacofer71
  */
 public class VentanaJuego extends JFrame{
-   
+    final static int DIM=8;
     PanelMinas pj;
     PanelRight pr;
     TMinas campo;
     Semaforo testigo;
-    
+    Control miControl;
    
     public VentanaJuego(){
         iniciaComponentes();
@@ -54,6 +54,11 @@ public class VentanaJuego extends JFrame{
                     )
         );
         gl.linkSize(SwingConstants.VERTICAL, pj, pr);
+        //----------------------------------------------------------------------
+        miControl = new Control(this);
+        
+        //----------------------------------------------------------------------
         pack();
     }
+    //--------------------------------------------------------------------------
 }
