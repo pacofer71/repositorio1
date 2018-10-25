@@ -141,26 +141,30 @@ public class Control implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        for(int i=0; i<vj.DIM; i++){
+            for(int j=0; j<vj.DIM; j++){
+                if(e.getSource()==vj.pj.getBotones()[i][j]){
+                    if(e.getButton()==MouseEvent.BUTTON3){
+                        JOptionPane.showMessageDialog(vj, "Presionase botn derecho de " + i +", "+j);
+                    }
+                }
+            }    
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

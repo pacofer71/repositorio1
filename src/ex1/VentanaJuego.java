@@ -65,6 +65,7 @@ public class VentanaJuego extends JFrame{
         for(int i=0; i<DIM; i++){
             for(int j=0; j<DIM; j++){
                 pj.getBotones()[i][j].addActionListener(miControl);
+                pj.getBotones()[i][j].addMouseListener(miControl);
             }
         }
         pr.getBtnPausa().addActionListener(miControl);
