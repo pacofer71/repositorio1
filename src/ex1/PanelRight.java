@@ -8,6 +8,7 @@ package ex1;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
@@ -62,9 +63,20 @@ public class PanelRight extends JPanel {
         treloj.setMaximumSize(new Dimension(60,25));
         
         btnStart=new JButton("START");
+        btnStart.setPreferredSize(new Dimension(80, 35));
+        btnStart.setMaximumSize(new Dimension(95, 35));
+        btnStart.setMargin(new Insets(0,0,0,0));
         btnSalir=new JButton("EXIT");
+        btnSalir.setPreferredSize(new Dimension(80, 35));
+        btnSalir.setMaximumSize(new Dimension(95, 35));
+        btnSalir.setMargin(new Insets(0,0,0,0));
+        btnSalir.setBackground(Color.LIGHT_GRAY);
+        btnSalir.setForeground(Color.red);
         btnPausa=new JButton("PAUSE");
         btnPausa.setEnabled(false);
+        btnPausa.setPreferredSize(new Dimension(80, 35));
+        btnPausa.setMaximumSize(new Dimension(95, 35));
+        btnPausa.setMargin(new Insets(0,0,0,0));
         //-------------
         this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
         

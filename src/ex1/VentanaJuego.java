@@ -27,7 +27,7 @@ public class VentanaJuego extends JFrame{
     }
     
     public void iniciaComponentes(){
-        campo=new TMinas();
+        //campo=new TMinas();
         testigo = new Semaforo(true);
         pj=new PanelMinas();
         pr=new PanelRight();

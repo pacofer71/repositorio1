@@ -34,7 +34,22 @@ public class Control implements ActionListener {
         
      }
      //-------------------------------------------------------------------------
+     if(e.getSource()==vj.pr.btnStart){
+         vj.pr.getBtnPausa().setEnabled(true);
+         vj.pr.getBtnStart().setEnabled(false);
+         activaBotones();
+         vj.campo=new TMinas();
+     }
+     //-------------------------------------------------------------------------
     }
-    
-    
+    //--------------------------------------------------------------------------
+    public void activaBotones(){
+        for(int i=0; i<vj.DIM; i++){
+            for(int j=0; j<vj.DIM; j++){
+                vj.pj.getBotones()[i][j].setEnabled(true);
+                
+            }
+        }
+    }
+    //-----------------------------------------------------------------------
 }

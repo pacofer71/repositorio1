@@ -28,10 +28,11 @@ public class PanelMinas extends JPanel {
          botones = new JButton[DIM][DIM];
          GridLayout grl = new GridLayout(DIM, DIM, 4,4);
          this.setLayout(grl);
+         
          this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
          for(int i=0; i<DIM; i++){
              for(int j=0; j<DIM; j++){
-                 botones[i][j]=new JButton("M");
+                 botones[i][j]=new JButton(" ");
                  //botones[i][j].setOpaque(false);
                  botones[i][j].setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
                  botones[i][j].setMaximumSize(new Dimension(40,40));
