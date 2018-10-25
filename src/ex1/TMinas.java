@@ -13,7 +13,7 @@ public class TMinas {
     private final int col=8;
     private final int filas=8;
     int [] [] campoMinas;
-    final int numMinas=8;
+    final int numMinas=10;
     public TMinas(){
         iniciarcMinas();
         ponerMinas();
