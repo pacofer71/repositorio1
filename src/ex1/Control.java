@@ -22,7 +22,18 @@ public class Control implements ActionListener {
     public void actionPerformed(ActionEvent e) {
      if(e.getSource()==vj.pr.getBtnSalir()){
          System.exit(0);
-     }   
+     } 
+     //-------------------------------------------------------------------------
+     if(e.getSource()==vj.pr.getBtnPausa()){
+        if("PAUSE".equals(vj.pr.getBtnPausa().getText())){
+            vj.pr.getBtnPausa().setText("CONTINUE");
+        }
+        else{
+            vj.pr.getBtnPausa().setText("PAUSE");
+        }
+        
+     }
+     //-------------------------------------------------------------------------
     }
     
     
