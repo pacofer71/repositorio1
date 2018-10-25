@@ -21,17 +21,17 @@ public class VentanaJuego extends JFrame{
     TMinas campo;
     Semaforo testigo;
     Control miControl;
-   
+    HiloHora miHilo; 
     public VentanaJuego(){
         iniciaComponentes();
     }
     
     public void iniciaComponentes(){
         //campo=new TMinas();
-        testigo = new Semaforo(true);
+        testigo = new Semaforo(true, true);
         pj=new PanelMinas();
         pr=new PanelRight();
-        
+        miHilo = new HiloHora(pr.getTreloj(), testigo);
         Container lienzo = this.getContentPane();
         GroupLayout gl = new GroupLayout(lienzo);
         lienzo.setLayout(gl);

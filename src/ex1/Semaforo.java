@@ -11,8 +11,10 @@ package ex1;
  */
 public class Semaforo {
     private boolean pausado;
-    public Semaforo(boolean b){
+    private boolean stop;
+    public Semaforo(boolean b, boolean s){
         pausado=b;
+        stop=s;
     }
 
     public boolean isPausado() {
@@ -22,5 +24,14 @@ public class Semaforo {
     public void setPausado(boolean pausado) {
         this.pausado = pausado;
     }
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
+    }
+    
     
 }

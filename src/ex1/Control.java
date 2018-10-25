@@ -29,9 +29,13 @@ public class Control implements ActionListener {
         if(e.getSource()==vj.pr.getBtnPausa()){
             if("PAUSE".equals(vj.pr.getBtnPausa().getText())){
                 vj.pr.getBtnPausa().setText("CONTINUE");
+                vj.testigo.setPausado(true);
+                activaBotones(false);
             }
             else{
                 vj.pr.getBtnPausa().setText("PAUSE");
+                vj.testigo.setPausado(false);
+                activaBotones(true);
             }
         }
     //-------------------------------------------------------------------------
@@ -41,6 +45,10 @@ public class Control implements ActionListener {
             activaBotones(true);
             //inicializo las minas
             vj.campo=new TMinas();
+            Thread hilo = new Thread(vj.miHilo);
+            vj.testigo.setStop(false);
+            vj.testigo.setPausado(false);
+            if(!hilo.isAlive()) hilo.start();
         }
     //---------------------------------------------------------------------
         for(int f=0; f<vj.DIM; f++){
@@ -50,8 +58,9 @@ public class Control implements ActionListener {
                 //Hemos Pisado una mina!!!!  
                  if(vj.campo.getCampoMinas()[f][c]==9){
                      activaBotones(false);
+                     vj.pj.getBotones()[f][c].setIcon(new ImageIcon(getClass().getResource("/img/minaexpb.png")));
                      JOptionPane.showMessageDialog(vj, "Perdiste!!!!!");
-                      vj.pj.getBotones()[f][c].setIcon(new ImageIcon(getClass().getResource("/img/minaexpb.png")));
+                     vj.testigo.setStop(true);
                      pintarMinas(f,c);
                      return;
                  }
@@ -66,17 +75,18 @@ public class Control implements ActionListener {
      //-------------------------------------------------------------------------
     }
     public void descubrir(int fil, int col){
-        //if(!vj.pj.getBotones()[fil][col].isEnabled()) return;
+        //
         for(int i=maximo(0, fil-1); i<=minimo(vj.DIM-1, fil+1); i++){
             for(int j=maximo(0, col-1); j<=minimo(vj.DIM-1, col+1); j++){
                 if(i==fil && j==col) break;
+               // if(!vj.pj.getBotones()[i][j].isEnabled()) break;
                 if(vj.campo.getCampoMinas()[i][j]!=9){
                     if(vj.campo.getCampoMinas()[i][j]==0){
                         vj.pj.getBotones()[i][j].setEnabled(false);
-                        descubrir(i,j);
+                        if(vj.pj.getBotones()[i][j].isEnabled()) descubrir(i,j);
                     }
                     else{
-                        vj.pj.getBotones()[i][j].setText(""+vj.campo.getCampoMinas()[i][j]);
+                        vj.pj.getBotones()[i][j].setText(" "+vj.campo.getCampoMinas()[i][j]);
                         vj.pj.getBotones()[i][j].setEnabled(false);
                     }
                 }
