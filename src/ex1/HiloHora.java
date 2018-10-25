@@ -33,9 +33,9 @@ public class HiloHora implements Runnable {
             while(testigo.isPausado()){
                // System.out.println("Estoy pausado!!!");
                 panel.setText(tiempo);
-                parar(800);
-                panel.setText("");
-                parar(800);
+                parar(500);
+                panel.setText("  :  ");
+                parar(500);
             }
             parar(1000);
             seg++;

@@ -7,6 +7,8 @@ package ex1;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -14,7 +16,7 @@ import javax.swing.JOptionPane;
  *
  * @author paco
  */
-public class Control implements ActionListener {
+public class Control implements ActionListener, MouseListener {
     VentanaJuego vj;
     public Control(VentanaJuego v){
         vj=v;
@@ -31,11 +33,13 @@ public class Control implements ActionListener {
                 vj.pr.getBtnPausa().setText("CONTINUE");
                 vj.testigo.setPausado(true);
                 activaBotones(false);
+               
             }
-            else{
+            else{ 
                 vj.pr.getBtnPausa().setText("PAUSE");
                 vj.testigo.setPausado(false);
                 activaBotones(true);
+             
             }
         }
     //-------------------------------------------------------------------------
@@ -50,7 +54,17 @@ public class Control implements ActionListener {
             vj.testigo.setPausado(false);
             if(!hilo.isAlive()) hilo.start();
         }
-    //---------------------------------------------------------------------
+     //-------------------------------------------------------------------------
+        for(int f=0; f<vj.DIM; f++){
+            for(int c=0; c<vj.DIM; c++){
+                if(e.getSource()==vj.pj.getBotones()[f][c]){
+                    if ((e.getModifiers() & 4) !=0){
+                        JOptionPane.showMessageDialog(vj, "Click derecho en boton :" + f + ", " +c   );
+                    }
+                }
+            }
+        }
+    //--------------------------------------------------------------------------
         for(int f=0; f<vj.DIM; f++){
             for(int c=0; c<vj.DIM; c++){
               if(e.getSource()==vj.pj.getBotones()[f][c]){
@@ -124,4 +138,29 @@ public class Control implements ActionListener {
         return a;
     }
     //--------------------------------------------------------------------------
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
