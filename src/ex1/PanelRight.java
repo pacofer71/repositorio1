@@ -27,7 +27,7 @@ public class PanelRight extends JPanel {
     private JLabel band, reloj;
     private JTextField tband, treloj;
     JButton btnStart, btnSalir, btnPausa;
-    
+    int nMinas=10;
     public PanelRight(){
         iniciaComponentes();
     }
@@ -44,7 +44,7 @@ public class PanelRight extends JPanel {
         reloj.setPreferredSize(new Dimension(30,30));
         reloj.setIcon(iconoReloj);
         
-        tband=new JTextField("00/00");
+        tband=new JTextField("00/"+nMinas);
         tband.setEditable(false);
         tband.setFont(new Font("Serif", Font.PLAIN, 14));
         tband.setForeground(Color.green);
@@ -66,12 +66,15 @@ public class PanelRight extends JPanel {
         btnStart.setPreferredSize(new Dimension(80, 35));
         btnStart.setMaximumSize(new Dimension(95, 35));
         btnStart.setMargin(new Insets(0,0,0,0));
+        
         btnSalir=new JButton("EXIT");
         btnSalir.setPreferredSize(new Dimension(80, 35));
         btnSalir.setMaximumSize(new Dimension(95, 35));
         btnSalir.setMargin(new Insets(0,0,0,0));
         btnSalir.setBackground(Color.LIGHT_GRAY);
         btnSalir.setForeground(Color.red);
+        btnSalir.setToolTipText("Boton Salir....");
+        
         btnPausa=new JButton("PAUSE");
         btnPausa.setEnabled(false);
         btnPausa.setPreferredSize(new Dimension(80, 35));

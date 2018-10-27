@@ -18,8 +18,12 @@ import javax.swing.JOptionPane;
  * @author paco
  */
 public class Control implements ActionListener, MouseListener {
+    
     VentanaJuego vj;
     static final int DIM=8;
+    static final int MINAS=10;
+    int contBanderas;
+    int contAciertos;
     public Control(VentanaJuego v){
         vj=v;
     }
@@ -52,13 +56,15 @@ public class Control implements ActionListener, MouseListener {
             vj.pr.getBtnStart().setEnabled(false);
             limpiarBotones();
             activaBotones(true);
-            
+            vj.pr.getTband().setText("00/"+MINAS);
             //inicializo las minas
             vj.campo=new TMinas();
             Thread hilo = new Thread(vj.miHilo);
             vj.testigo.setStop(false);
             vj.testigo.setPausado(false);
             if(!hilo.isAlive()) hilo.start();
+            contBanderas=0;
+            contAciertos=0;
         }
      //-------------------------------------------------------------------------
        
@@ -71,7 +77,7 @@ public class Control implements ActionListener, MouseListener {
                 //Hemos Pisado una mina!!!!  
                  if(vj.campo.getCampoMinas()[f][c]==9){
                      activaBotones(false);
-                     vj.pj.getBotones()[f][c].setIcon(new ImageIcon(getClass().getResource("/img/minaexpb.png")));
+                     vj.pj.getBotones()[f][c].setIcon(new ImageIcon(getClass().getResource("/img/minasexpult.png")));
                      JOptionPane.showMessageDialog(vj, "Perdiste!!!!!");
                      vj.testigo.setStop(true);
                      pintarMinas(f,c);
@@ -80,15 +86,13 @@ public class Control implements ActionListener, MouseListener {
                  }
                  //No hemos dado con ninguna MIna 
                  vj.pj.getBotones()[f][c].setEnabled(false);
-                 if(vj.campo.getCampoMinas()[f][c]!=0) vj.pj.getBotones()[f][c].setText("" + vj.campo.getCampoMinas()[f][c]);
+                 if(vj.campo.getCampoMinas()[f][c]!=0) vj.pj.getBotones()[f][c].setText(""+vj.campo.getCampoMinas()[f][c]);
                  descubrir(f,c);
               }  
             }
         } 
-        
-     //-------------------------------------------------------------------------
-     //-------------------------------------------------------------------------
     }
+    //-------------------------------------------------------------------------------
     public void descubrir(int fil, int col){
         //
         for(int i=maximo(0, fil-1); i<=minimo(vj.DIM-1, fil+1); i++){
@@ -156,13 +160,7 @@ public class Control implements ActionListener, MouseListener {
         return a;
     }
     //--------------------------------------------------------------------------
-    public void reseteaTodo(){
-        vj.testigo.setStop(true);
-        vj.gl.replace(vj.pj, new PanelMinas());
-        vj.revalidate();
-        
-    }
-    //-------------------------------------------------------------------------
+    
     @Override
     public void mouseClicked(MouseEvent e) {
         
@@ -188,16 +186,32 @@ public class Control implements ActionListener, MouseListener {
         System.out.println("bandera2= "+ bandera2);
         if(icono==null){
             vj.pj.getBotones()[f][c].setIcon(bandera1);
+            contBanderas++;
+            if(vj.campo.getCampoMinas()[f][c]==9){
+                contAciertos++;
+            }
+            vj.pr.getTband().setText(""+contBanderas+"/"+MINAS);
+            if(contAciertos==MINAS){
+                ganar();
+            }
         }
         else if((""+icono).equals(""+bandera1)){
             vj.pj.getBotones()[f][c].setIcon(bandera2);
         }
         else{
             vj.pj.getBotones()[f][c].setIcon(null);
+            if(vj.campo.getCampoMinas()[f][c]==9) contAciertos--;
+            contBanderas--;
         }
         
     }
-    
+    //--------------------------------------------------------------------------
+        public void ganar(){
+            JOptionPane.showMessageDialog(vj, "## GANASTE, FELICIDADES ##");
+            vj.testigo.setStop(true);
+            vj.pr.btnStart.setEnabled(true);
+            return;
+        }
     //--------------------------------------------------------------------------
     @Override
     public void mousePressed(MouseEvent e) {
@@ -215,7 +229,5 @@ public class Control implements ActionListener, MouseListener {
     public void mouseExited(MouseEvent e) {
     }
     //--------------------------------------------------------------------------
-   public void  crearBotones(){
-       
-   }
+   
 }

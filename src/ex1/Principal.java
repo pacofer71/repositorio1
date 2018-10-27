@@ -6,6 +6,7 @@
 package ex1;
 
 import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JFrame;
 import static javax.swing.SwingUtilities.invokeLater;
 import javax.swing.UIManager;
@@ -21,7 +22,8 @@ public class Principal {
         mv.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mv.setTitle("Busca Minas");
         mv.setResizable(false);
-        UIManager.put("Button.disabledText", Color.green);
+        UIManager.put("Button.disabledText", Color.blue);
+        
         
     }
     
