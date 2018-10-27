@@ -22,6 +22,8 @@ public class VentanaJuego extends JFrame{
     Semaforo testigo;
     Control miControl;
     HiloHora miHilo; 
+    Container lienzo;
+    GroupLayout gl;
     public VentanaJuego(){
         iniciaComponentes();
     }
@@ -32,8 +34,8 @@ public class VentanaJuego extends JFrame{
         pj=new PanelMinas();
         pr=new PanelRight();
         miHilo = new HiloHora(pr.getTreloj(), testigo);
-        Container lienzo = this.getContentPane();
-        GroupLayout gl = new GroupLayout(lienzo);
+        lienzo = this.getContentPane();
+        gl = new GroupLayout(lienzo);
         lienzo.setLayout(gl);
         
         gl.setAutoCreateGaps(true);

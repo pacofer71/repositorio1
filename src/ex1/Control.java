@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class Control implements ActionListener, MouseListener {
     VentanaJuego vj;
+    static final int DIM=8;
     public Control(VentanaJuego v){
         vj=v;
     }
@@ -27,26 +29,30 @@ public class Control implements ActionListener, MouseListener {
         if(e.getSource()==vj.pr.getBtnSalir()){
             System.exit(0);
         } 
-    //-------------------------------------------------------------------------
+    //------------------  BOTON PAUSA -------------------------------------------
+    
         if(e.getSource()==vj.pr.getBtnPausa()){
             if("PAUSE".equals(vj.pr.getBtnPausa().getText())){
                 vj.pr.getBtnPausa().setText("CONTINUE");
                 vj.testigo.setPausado(true);
-                activaBotones(false);
+                muestraBotones(false);
                
             }
             else{ 
                 vj.pr.getBtnPausa().setText("PAUSE");
                 vj.testigo.setPausado(false);
-                activaBotones(true);
+                muestraBotones(true);
              
             }
         }
-    //-------------------------------------------------------------------------
+    //----------------    BOTON START   -------------------------------------------
+    
         if(e.getSource()==vj.pr.btnStart){
             vj.pr.getBtnPausa().setEnabled(true);
             vj.pr.getBtnStart().setEnabled(false);
+            limpiarBotones();
             activaBotones(true);
+            
             //inicializo las minas
             vj.campo=new TMinas();
             Thread hilo = new Thread(vj.miHilo);
@@ -55,16 +61,9 @@ public class Control implements ActionListener, MouseListener {
             if(!hilo.isAlive()) hilo.start();
         }
      //-------------------------------------------------------------------------
-        for(int f=0; f<vj.DIM; f++){
-            for(int c=0; c<vj.DIM; c++){
-                if(e.getSource()==vj.pj.getBotones()[f][c]){
-                    if ((e.getModifiers() & 4) !=0){
-                        JOptionPane.showMessageDialog(vj, "Click derecho en boton :" + f + ", " +c   );
-                    }
-                }
-            }
-        }
-    //--------------------------------------------------------------------------
+       
+    //------------------     BOTONES MINAS        -----------------------------------------
+    
         for(int f=0; f<vj.DIM; f++){
             for(int c=0; c<vj.DIM; c++){
               if(e.getSource()==vj.pj.getBotones()[f][c]){
@@ -76,10 +75,12 @@ public class Control implements ActionListener, MouseListener {
                      JOptionPane.showMessageDialog(vj, "Perdiste!!!!!");
                      vj.testigo.setStop(true);
                      pintarMinas(f,c);
+                     vj.pr.btnStart.setEnabled(true);
                      return;
                  }
                  //No hemos dado con ninguna MIna 
                  vj.pj.getBotones()[f][c].setEnabled(false);
+                 if(vj.campo.getCampoMinas()[f][c]!=0) vj.pj.getBotones()[f][c].setText("" + vj.campo.getCampoMinas()[f][c]);
                  descubrir(f,c);
               }  
             }
@@ -94,13 +95,13 @@ public class Control implements ActionListener, MouseListener {
             for(int j=maximo(0, col-1); j<=minimo(vj.DIM-1, col+1); j++){
                 if(i==fil && j==col) break;
                // if(!vj.pj.getBotones()[i][j].isEnabled()) break;
-                if(vj.campo.getCampoMinas()[i][j]!=9){
+                if(vj.campo.getCampoMinas()[i][j]!=9 && vj.pj.getBotones()[i][j].isEnabled()){
                     if(vj.campo.getCampoMinas()[i][j]==0){
                         vj.pj.getBotones()[i][j].setEnabled(false);
-                        if(vj.pj.getBotones()[i][j].isEnabled()) descubrir(i,j);
+                        descubrir(i,j);
                     }
                     else{
-                        vj.pj.getBotones()[i][j].setText(" "+vj.campo.getCampoMinas()[i][j]);
+                        vj.pj.getBotones()[i][j].setText(""+vj.campo.getCampoMinas()[i][j]);
                         vj.pj.getBotones()[i][j].setEnabled(false);
                     }
                 }
@@ -129,6 +130,23 @@ public class Control implements ActionListener, MouseListener {
         }
     }
     //--------------------------------------------------------------------------
+    public void limpiarBotones(){
+        for(int i=0; i<vj.DIM; i++){
+            for(int j=0; j<vj.DIM; j++){
+                vj.pj.getBotones()[i][j].setIcon(null);
+                vj.pj.getBotones()[i][j].setText("");
+            }
+        }
+    }
+    //---------------------------------------------------------------------------
+    public void muestraBotones(Boolean b){
+        for(int i=0; i<vj.DIM; i++){
+            for(int j=0; j<vj.DIM; j++){
+                vj.pj.getBotones()[i][j].setVisible(b);
+               
+            }
+        }
+    }
     public int maximo(int a, int b){
         if(a>=b) return a;
         return b;
@@ -138,20 +156,49 @@ public class Control implements ActionListener, MouseListener {
         return a;
     }
     //--------------------------------------------------------------------------
-
+    public void reseteaTodo(){
+        vj.testigo.setStop(true);
+        vj.gl.replace(vj.pj, new PanelMinas());
+        vj.revalidate();
+        
+    }
+    //-------------------------------------------------------------------------
     @Override
     public void mouseClicked(MouseEvent e) {
+        
         for(int i=0; i<vj.DIM; i++){
             for(int j=0; j<vj.DIM; j++){
                 if(e.getSource()==vj.pj.getBotones()[i][j]){
                     if(e.getButton()==MouseEvent.BUTTON3){
-                        JOptionPane.showMessageDialog(vj, "Presionase botn derecho de " + i +", "+j);
+                        ponBanderas(i,j);
+                        
+                       
                     }
                 }
             }    
         }
     }
-
+    //---------------------------------------------------------------------------
+    public void ponBanderas(int f, int c ){
+        Icon bandera1=new ImageIcon(getClass().getResource("/img/bandera.jpg"));
+        Icon bandera2 =new ImageIcon(getClass().getResource("/img/bandera2.jpg"));
+        Icon icono =  (ImageIcon)vj.pj.getBotones()[f][c].getIcon();
+        System.out.println("boton["+f+"]["+c+"]"+""+icono);
+        System.out.println("bandera1= "+ bandera1);
+        System.out.println("bandera2= "+ bandera2);
+        if(icono==null){
+            vj.pj.getBotones()[f][c].setIcon(bandera1);
+        }
+        else if((""+icono).equals(""+bandera1)){
+            vj.pj.getBotones()[f][c].setIcon(bandera2);
+        }
+        else{
+            vj.pj.getBotones()[f][c].setIcon(null);
+        }
+        
+    }
+    
+    //--------------------------------------------------------------------------
     @Override
     public void mousePressed(MouseEvent e) {
     }
@@ -167,4 +214,8 @@ public class Control implements ActionListener, MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
     }
+    //--------------------------------------------------------------------------
+   public void  crearBotones(){
+       
+   }
 }
